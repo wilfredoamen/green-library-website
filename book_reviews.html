@@ -1,0 +1,112 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Reviews - Community Hub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 font-sans">
+    <!-- Navigation Bar -->
+    <nav class="bg-blue-600 text-white p-4">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="home.html" class="text-2xl font-bold">Community Hub</a>
+            <div class="space-x-4">
+                <a href="home.html" class="hover:underline">Home</a>
+                <a href="about_us.html" class="hover:underline">About Us</a>
+                <a href="events.html" class="hover:underline">Events</a>
+                <a href="book_reviews.html" class="hover:underline">Book Reviews</a>
+                <a href="contact_us.html" class="hover:underline">Contact Us</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Book Reviews Section -->
+    <section class="py-16">
+        <div class="container mx-auto px-4">
+            <h1 class="text-3xl font-bold text-center mb-8">Book Reviews</h1>
+            <p class="text-center text-lg mb-12">Explore our community's favorite reads and share your thoughts on the latest books!</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Book Review 1 -->
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <img src="https://images-na.ssl-images-amazon.com/images/I/81Woz5W9P0L.jpg" alt="The Alchemist Cover" class="rounded-lg mb-4 w-full h-64 object-cover">
+                    <h2 class="text-xl font-semibold mb-2">The Alchemist</h2>
+                    <p class="text-gray-600 mb-2">by Paulo Coelho</p>
+                    <p class="mb-4">A beautifully written tale of following your dreams. This book inspired me to pursue my passions with courage. Highly recommended for anyone seeking purpose.</p>
+                    <p class="text-sm text-gray-500">Reviewed by Sarah M. on April 20, 2025</p>
+                </div>
+                <!-- Book Review 2 -->
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <img src="https://images-na.ssl-images-amazon.com/images/I/71jW5b6H2NL.jpg" alt="Sapiens Cover" class="rounded-lg mb-4 w-full h-64 object-cover">
+                    <h2 class="text-xl font-semibold mb-2">Sapiens: A Brief History of Humankind</h2>
+                    <p class="text-gray-600 mb-2">by Yuval Noah Harari</p>
+                    <p class="mb-4">An eye-opening exploration of human history. The insights on how societies evolved are both fascinating and thought-provoking.</p>
+                    <p class="text-sm text-gray-500">Reviewed by James T. on April 15, 2025</p>
+                </div>
+                <!-- Book Review 3 -->
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <img src="https://images-na.ssl-images-amazon.com/images/I/81YOuOGFCPL.jpg" alt="The Night Circus Cover" class="rounded-lg mb-4 w-full h-64 object-cover">
+                    <h2 class="text-xl font-semibold mb-2">The Night Circus</h2>
+                    <p class="text-gray-600 mb-2">by Erin Morgenstern</p>
+                    <p class="mb-4">A magical and immersive story of a mysterious circus. The vivid imagery and intricate plot make this a must-read for fantasy lovers.</p>
+                    <p class="text-sm text-gray-500">Reviewed by Emily R. on April 10, 2025</p>
+                </div>
+            </div>
+            <!-- Call to Action -->
+            <div class="text-center mt-12">
+                <a href="contact_us.html" class="bg-blue-600 text-white px-6 py-3 rounded-full font-semibold hover:bg-blue-700">Submit Your Review</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto text-center">
+            <p>© 2025 Community Hub. All rights reserved.</p>
+            <div class="mt-4 space-x-4">
+                <a href="contact_us.html" class="hover:underline">Contact Us</a>
+                <a href="about_us.html" class="hover:underline">About</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
