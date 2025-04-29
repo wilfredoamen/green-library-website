@@ -10,6 +10,8 @@ A term of developers is tasked with the resposibility of enhancing a website for
 
 **i**. Create and initialize a repository with a readme.md file and clone it to a local machine.
 
+- Repository name: greenwood-library-website
+
 ![img1](./img/img1.png)
 
 - [URL of Cloned Repository](https://github.com/wilfredoamen/green-library-website.git)
@@ -92,3 +94,88 @@ Since the pull request is created and now visible to a team member who can revie
 ![img10](./img/img10.png)
 
 ![img11](./img/img11.png)
+
+
+
+## Jamie's Workflow
+
+**1**. Create a branch for Jamie and switch to the new branch **"update-events"** by using the command below
+
+
+```bash
+# Create and switch to a branch
+git checkout -b update-events
+```
+
+![img12](./img/img12.png)
+
+**2**. Pull the latest changes from the main branch into the update-events branch to ensure Jamie's branch starts with the latest changes, reducing conflicts.
+
+```bash
+# Pull latest changes
+git pull origin main
+```
+![img-pull](./img/img-pull.png)
+
+**3**. Add a new file **"events.html"** and add a random text content inside the file 
+
+```bash
+# Open and update the events file
+nano events.html
+```
+
+![img12a](./img/img12a.png)
+
+
+**4**. Stage,Commit and Push Jamie's changes by using the following command below.
+
+```bash
+# Add the file the staging area
+git add events.html
+
+# Commit the changes with a discriptive message
+git commit -m "updated the events.html file"
+
+# Push the changes to github repository
+git push origin update-events
+```
+
+![img13](./img/img13.png)
+
+
+**5**. Pull the latest changes from the main branch into the update-events branch before creating PR, to ensure it reflects the latest mian state,making the review and merge process smoother.
+
+```bash
+# Pull latest changes
+git pull origin main
+```
+![img-pull](./img/img-pull.png)
+
+**6**. Create a pull request for Jamie's changes
+
+- Open a web-broswer and navigate to the github repository.[Github-Url](https://github.com/wilfredoamen/green-library-website/tree/update-events)
+
+![img7b](./img/img7b.png)
+
+- Switch to Jamie's branch by clicking on the branch dropdown menu and select add-book-reviews branch, which is in this case Jamie's branch. After switching to Jamie's branch click the dropdown menu *Contribute* and select *Open pull request*
+
+![img14](./img/img14.png)
+
+- After clicking the dropdown menu Contribute, followed by the Open pull request. These will automatically select the main project's branch as the base and Jamie's recently pushed branch "update-events" as the compare branch. Since everything look good, after providing a title and description for the pull request Click "*Create pull request*" to create a pull request.
+
+
+![img15](./img/img15.png)
+
+**7**. Review and Merge Jamie's Pull Request
+
+Since the pull request is created and now visible to a team member who can review and merge Jamie's changes. The team member reviewing Jamie's changes approved and merges the pull request, since the term agrees with the changes.
+
+![img16](./img/img16.png)
+
+
+![img17](./img/img17.png)
+
+
+
+
+
